@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AlgoritmoGenetico.Library/bin/Debug/netstandard2.0
+/AlgoritmoGenetico.Library/obj
+/Console/bin/Debug/netcoreapp2.0
+/Console/obj
+/.vs/AlgoritmosGeneticos/v15
