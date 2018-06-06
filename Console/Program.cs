@@ -10,15 +10,23 @@ namespace ConsoleApp
         static void Main(string[] args)
         {
             var listaProdutos = CriarProdutos();
+            var listaProdutosCarregamento = new List<Produto>();
 
             var espacos = listaProdutos.Select(x => x.Espaco).ToList();
             var valores = listaProdutos.Select(x => x.Valor).ToList();
             double limiteEspacos = 3;
-            int tamanhoPopulacao = 20;
+            int tamanhoPopulacao = 500;
 
             var ag = new AlgoritmoGenetico.Library.AlgoritmoGenetico(tamanhoPopulacao);
             ag.InicializarPopulacao(espacos, valores, limiteEspacos);
             ag.Populacao.ForEach(x => x.Avaliacao());
+            ag.OrdenarPopulacao();
+
+            for(int i = 0; i < ag.MelhorSolucao.Cromossomo.Count; i++)
+            {
+                if (ag.MelhorSolucao.Cromossomo[i] == "1")
+                    listaProdutosCarregamento.Add(listaProdutos[i]);
+            }
 
             for(int i = 0; i < ag.Populacao.Count; i++)
             {
@@ -27,6 +35,12 @@ namespace ConsoleApp
                 Console.WriteLine($"Valores = {String.Join(',', ag.Populacao[i].NotaAvaliacao)}");
                 Console.WriteLine($"Cromossomo = {String.Join(',', ag.Populacao[i].Cromossomo)}");
             }
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"Carregamento do caminhão Valor: {ag.MelhorSolucao.NotaAvaliacao} Espaço: {ag.MelhorSolucao.EspacoUsado}");
+            Console.ForegroundColor = ConsoleColor.White;
+            foreach (var item in listaProdutosCarregamento)
+                Console.WriteLine($"Produto: {item.Nome} Valor: {item.Valor}");
 
             //var ind1 = new Individuo(espacos, valores, limiteEspacos);
             //var ind2 = new Individuo(espacos, valores, limiteEspacos);

@@ -5,6 +5,8 @@ namespace AlgoritmoGenetico.Library
 {
     public class Individuo
     {
+        private Random random = new Random();
+
         public Individuo(List<double> espacos, List<double> valores, double limiteEspacos, int geracao = 0)
         {
             Espacos = espacos;
@@ -47,7 +49,6 @@ namespace AlgoritmoGenetico.Library
 
         public List<Individuo> Crossover(Individuo outro)
         {
-            Random random = new Random();
             var corte = Convert.ToInt32(Math.Round(random.NextDouble() * Cromossomo.Count));
 
             var filho1 = new List<string>();
@@ -69,7 +70,6 @@ namespace AlgoritmoGenetico.Library
 
         public Individuo Mutacao(double taxaMutacao)
         {
-            Random random = new Random();
             for(int i=0; i < Cromossomo.Count; i++)
             {
                 if(random.NextDouble() < taxaMutacao)
@@ -86,9 +86,8 @@ namespace AlgoritmoGenetico.Library
 
         private void InicializarCromossomo()
         {
-            for(int i = 0; i < Espacos.Count; i++)
+            for (int i = 0; i < Espacos.Count; i++)
             {
-                Random random = new Random();
                 if (random.NextDouble() < 0.5)
                     Cromossomo.Add("0");
                 else
