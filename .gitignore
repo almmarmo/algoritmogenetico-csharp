@@ -7,3 +7,5 @@
 /Console/bin/Debug/netcoreapp2.0
 /Console/obj
 /.vs/AlgoritmosGeneticos/v15
+/AGUI/obj/Debug
+/.vs/AlgoritmosGeneticos/DesignTimeBuild

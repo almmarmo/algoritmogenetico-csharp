@@ -13,6 +13,7 @@ namespace AlgoritmoGenetico.Library
             Valores = valores;
             LimiteEspacos = limiteEspacos;
             Cromossomo = new List<string>();
+            Geracao = geracao;
 
             InicializarCromossomo();
         }

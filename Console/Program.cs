@@ -15,46 +15,19 @@ namespace ConsoleApp
             var espacos = listaProdutos.Select(x => x.Espaco).ToList();
             var valores = listaProdutos.Select(x => x.Valor).ToList();
             double limiteEspacos = 3;
-            int tamanhoPopulacao = 500;
+            int tamanhoPopulacao = 20;
+            double taxaMutacao = 0.01;
+            int numeroGeracoes = 100;
 
             var ag = new AlgoritmoGenetico.Library.AlgoritmoGenetico(tamanhoPopulacao);
-            ag.InicializarPopulacao(espacos, valores, limiteEspacos);
-            ag.Populacao.ForEach(x => x.Avaliacao());
-            ag.OrdenarPopulacao();
-
-            for(int i = 0; i < ag.MelhorSolucao.Cromossomo.Count; i++)
+            var resultado = ag.Resolver(taxaMutacao, numeroGeracoes, espacos, valores, limiteEspacos);
+            for(int i = 0; i < listaProdutos.Count; i++)
             {
-                if (ag.MelhorSolucao.Cromossomo[i] == "1")
-                    listaProdutosCarregamento.Add(listaProdutos[i]);
+                if (resultado[i] == "1")
+                    Console.WriteLine($"Nome: {listaProdutos[i].Nome} R$ {listaProdutos[i].Valor}");
             }
 
-            for(int i = 0; i < ag.Populacao.Count; i++)
-            {
-                Console.WriteLine($"*** Indivíduo {i} ***");
-                Console.WriteLine($"Espaços = {String.Join(',', ag.Populacao[i].EspacoUsado)}");
-                Console.WriteLine($"Valores = {String.Join(',', ag.Populacao[i].NotaAvaliacao)}");
-                Console.WriteLine($"Cromossomo = {String.Join(',', ag.Populacao[i].Cromossomo)}");
-            }
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Carregamento do caminhão Valor: {ag.MelhorSolucao.NotaAvaliacao} Espaço: {ag.MelhorSolucao.EspacoUsado}");
-            Console.ForegroundColor = ConsoleColor.White;
-            foreach (var item in listaProdutosCarregamento)
-                Console.WriteLine($"Produto: {item.Nome} Valor: {item.Valor}");
-
-            //var ind1 = new Individuo(espacos, valores, limiteEspacos);
-            //var ind2 = new Individuo(espacos, valores, limiteEspacos);
-
-            //Console.WriteLine($"Cromossomos do Individuo 1: {String.Join(',', ind1.Cromossomo)}");
-            //Console.WriteLine($"Cromossomos do Individuo 2: {String.Join(',', ind2.Cromossomo)}");
-
-            //Console.WriteLine("\nRealizando crossover...\n");
-
-            //var crossovers = ind1.Crossover(ind2);
-
-            //foreach (var item in crossovers)
-            //    Console.WriteLine($"Novo Individuo: {String.Join(',', item.Cromossomo)}");
-
+            Console.WriteLine(ag.VisualizaGeracao());
             Console.ReadKey();
         }
 
